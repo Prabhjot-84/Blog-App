@@ -13,7 +13,7 @@ const salt = bcrypt.genSaltSync(10);
 app.use( cors() );
 app.use( express.json() );
 
-mongoose.connect('mongodb+srv://Prabhjot:godlikespeed84@cluster0.a0xihpu.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://@cluster0.a0xihpu.mongodb.net/?retryWrites=true&w=majority');
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
@@ -39,6 +39,3 @@ app.post('/login', async(req, res) => {
 app.listen(PORT, () => {
     console.log(`server is running successfully on PORT ${PORT}` )
 });
-
-
-//mongodb+srv://Prabhjot:godlikespeed84@cluster0.a0xihpu.mongodb.net/?retryWrites=true&w=majority
