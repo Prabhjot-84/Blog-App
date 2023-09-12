@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom' 
 
 const Header = () => {
   return (
     <header>
-        <Link to="/" className="logo"> My Blogs </Link>
+        <Link to="/" className="logo"> Blogtown </Link>
         <nav>
           <Link to="/login"> Login </Link>
           <Link to="/register"> Register </Link>

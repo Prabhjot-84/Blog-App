@@ -3,11 +3,17 @@ import Post from '../Post'
 
 const IndexPage = () => {
   return (
-    <>
-        <Post />
-        <Post />
-        <Post />
-    </>
+    <div className='blogGrid'> 
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+      <Post />
+    </div>
   )
 }
 
