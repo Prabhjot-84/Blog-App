@@ -8,7 +8,7 @@
 }
 
 body{
-  /* color: var(--main-color);
+  /* color: var(--main-color); 
   background: var(--main-bg); */
   color: #444;
 }
@@ -32,6 +32,9 @@ header{
   align-items: center;
   background: #FFCC70;
   height: calc(60px + 1vw);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 header a{
@@ -85,19 +88,56 @@ header nav{
 }
 
 .createBtn{
+  display: block;
   width: calc(70px + 4vw);
   height: calc(20px + 2vw);
   font-size: calc(10px + 0.8vw);
-  background: transparent;
+  background: aquamarine;
   border: 1px solid black;
   color: black;
+  text-align: center;
+  text-decoration: none;
   margin-top: 2vw;
+  border-radius: 5px;
+  padding: 7px 0px;
+  cursor: pointer;
+  transition: 0.2s ease-out all;
 }
 
 .createBtn:hover{
-  background: aquamarine;
+  background: aqua;
+  border: none;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.301);
 }
 
+.logout{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: khaki;
+  height: 40px;
+  width: 120px;
+  padding: 0;
+  margin: 0;
+  color: gray;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-family: monospace;
+  transition: 0.2s ease-out all;
+}
+.logout:hover{
+  background: khaki;
+  /* border: 1px solid white; */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.301);
+  transform: scale(1.05);
+  transition: 0.2s ease-in all;
+  cursor: pointer;
+}
+
+.logout_img{
+  height: 30px;
+  width: 30px;
+}
 
 /* .blogGrid{
   border: 5px solid red;
@@ -125,6 +165,7 @@ header nav{
   width: calc(215px + 5vw);
   padding: 10px;
   background: whitesmoke;
+  border: 1px solid gainsboro;
   border-radius: 10px;
 }
 
@@ -164,6 +205,64 @@ header nav{
   font-size: calc(10px + 0.4vw);
 }
 
+.popAlert{
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: -25%;
+  left: 50%;
+  width: 250px;
+  padding: 10px;
+  text-align: center;
+  transition: 0.25s ease-in-out all;
+}
+
+.alertFshow{
+  background-color: rgb(255, 66, 66);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 5%;
+  left: 50%;
+  width: 275px;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  transition: 0.25s ease-in-out all;
+}
+
+.alertSshow{
+  background-color: rgb(4, 194, 58);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 5%;
+  left: 50%;
+  width: 340px;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  color: white;
+  font-size: large;
+  transition: 0.25s ease-in-out all;
+}
+
+
+.caution{
+  height: 36px;
+  width: 36px;
+}
+
+.congo{
+  height: 45px;
+  width: 45px;
+}
+
 .login, .register{
   max-width: 400px;
   margin: 0 auto;
@@ -189,19 +288,42 @@ button{
   color: white;
   border-radius: 5px;
   padding: 7px 0px;
-  margin-top: 25px;
   font-size: 18px;
   cursor: pointer;
   border: none;
+  transition: 0.2s ease-out all;
 }
 
 button:hover{
   background-color: #333;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.301);
+  transform: scale(1.01);
+  transition: 0.2s ease-in all;
 }
 
-form h1{
+.register_h, .login_h{
   text-align: center;
   text-decoration: underline;
+}
+
+.reg_btn, .log_btn{
+  margin-top: 25px;
+}
+
+.create_post_btn{
+  width: calc(120px + 3vw);
+  height: calc(35px + 1.5vw);
+  font-size: calc(12.5px + 0.5vw);
+  background-color: coral;
+  margin: 20px auto 0 auto;
+  transition: 0.2s ease-out all;
+}
+
+.create_post_btn:hover{
+  cursor: pointer;
+  background-color: orange;
+  background-color: orangered;
+  transform: scale(1.02);
 }
 
 
@@ -257,7 +379,33 @@ form h1{
     background: gold;
     color: black;
   }
+  .blogGrid{
+    grid-template-columns: repeat(2, 1fr);
+  }
   .post{
-    width: 75%;
+    width: 90%;
+    padding: 6px;
+  }
+  .summary{
+    display: none;
+  }
+  .texts h2, .info{
+    font-size: 10px;
+  }
+  .readBtn{
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+    font-size: calc(10px + 0.4vw);
+  }
+  .logout{
+    font-size: medium;
+    color: darkslategrey;
+    height: 30px;
+    width: 85px;
+  }
+  .logout_img{
+    height: 20px;
+    width: 18px;
   }
 }
