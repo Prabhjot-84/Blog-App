@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { loginFunc, registerFunc } from './controller/create.js';
+import { loginFunc, registerFunc, postFunc } from './controller/create.js';
 import cookieParser from 'cookie-parser';
 import Jwt from 'jsonwebtoken';
 
@@ -36,6 +36,11 @@ app.get('/profile', (req,res) => {
 app.post('/logout', (req,res) => {
     res.cookie('token', '').json('logout ok 👍');
 })
+
+
+// Creating a post
+app.post('/post', postFunc);
+
 
 app.listen(PORT, () => { 
     console.log(`server is running successfully on PORT ${PORT}` )

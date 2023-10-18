@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import bcrypt from 'bcrypt';
 import Jwt from "jsonwebtoken";
+import multer from "multer";
+const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'starlink893hasinvadedearth894today';
@@ -45,3 +47,19 @@ export const loginFunc = async (req, res) => {
         res.status(400).json('Wrong Credentials');
     }
 }
+
+
+
+// Creating a post 
+export const postFunc = [
+    uploadMiddleware.single('file'), // Use the uploadMiddleware as a middleware
+    async (req, res) => {
+        // extracting the original name from the uploaded file
+        const {originalname} = req.file;
+        // breaking the file name into 
+        const parts = originalname.split('.');
+        const ext = parts[parts.length-1];
+        res.json({ext});
+        // res.json({files: req.file});
+    },
+  ];
