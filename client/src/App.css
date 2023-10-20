@@ -11,6 +11,7 @@ body{
   /* color: var(--main-color); 
   background: var(--main-bg); */
   color: #444;
+  padding-bottom: 50px;
 }
 
 img{
@@ -93,7 +94,9 @@ header nav{
 }
 
 .createBtn{
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: calc(70px + 4vw);
   height: calc(20px + 2vw);
   font-size: calc(10px + 0.8vw);
@@ -331,6 +334,11 @@ button:hover{
   background-color: orange;
   background-color: orangered;
   transform: scale(1.02);
+}
+
+.file_input{
+  height: 43px;
+  padding: 10px;
 }
 
 

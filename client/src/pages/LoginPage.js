@@ -45,7 +45,6 @@ const LoginPage = () => {
     });
 
     if( response.status === 200 ){
-      
       // this changes the navbar from login to logout.
       // setUserInfo that is in context api, its value changes
       response.json().then( userInfo => {

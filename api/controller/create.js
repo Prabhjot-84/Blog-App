@@ -1,11 +1,15 @@
 import User from "../models/user.js";
-import bcrypt from 'bcrypt';
-import Jwt from "jsonwebtoken";
-import multer from "multer";
+import PostModel from "../models/Post.js"
+import bcrypt from 'bcrypt';    // for security
+import Jwt from "jsonwebtoken"; // for security
+import multer from "multer";    // for uploading files
+import fs from "fs";            // fs is file system
+
 const uploadMiddleware = multer({ dest: 'uploads/' });
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'starlink893hasinvadedearth894today';
+
 
 // Function called for user REGISTRATION
 export const registerFunc = async (req, res) => {
@@ -49,17 +53,33 @@ export const loginFunc = async (req, res) => {
 }
 
 
-
 // Creating a post 
 export const postFunc = [
     uploadMiddleware.single('file'), // Use the uploadMiddleware as a middleware
     async (req, res) => {
+        
         // extracting the original name from the uploaded file
-        const {originalname} = req.file;
+        const {originalname, path} = req.file;
         // breaking the file name into 
         const parts = originalname.split('.');
+        // to get the extension of the file
         const ext = parts[parts.length-1];
-        res.json({ext});
+        // file name in uploads before "fs" : 3a1a19cde452855f60d20accc5baeb38
+        // file name in uploads after "fs" : 28fca6ce365cf31abb9be65f3293b451.gif
+        const newPath = path+'.'+ext;
+        fs.renameSync(path, newPath );
+
+        const {title,summary,content} = req.body;
+        const postDoc = await PostModel.create({
+            title,
+            summary,
+            content,
+            cover:newPath,
+            
+        });
+        
+        res.json(postDoc);
+        // res.json( originalname );
         // res.json({files: req.file});
     },
   ];

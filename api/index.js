@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { loginFunc, registerFunc, postFunc } from './controller/create.js';
+import { getPostFunc } from './controller/read.js';
 import cookieParser from 'cookie-parser';
 import Jwt from 'jsonwebtoken';
 
@@ -40,6 +41,9 @@ app.post('/logout', (req,res) => {
 
 // Creating a post
 app.post('/post', postFunc);
+
+// Displaying the post on the home screen
+app.get('/post', getPostFunc);
 
 
 app.listen(PORT, () => { 

@@ -1,7 +1,7 @@
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import {useState} from "react";
-import {Navigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 // import Editor from "../Editor";
 
 export default function CreatePost() {
@@ -11,6 +11,7 @@ export default function CreatePost() {
     const [content,setContent] = useState('');
     const [files, setFiles] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const nav = useNavigate();
 
     const modules = {
         toolbar: [
@@ -42,9 +43,14 @@ export default function CreatePost() {
         body: data,
         credentials: 'include',
         });
-        // if (response.ok) {
-        //     setRedirect(true);
-        // }
+        if (response.ok) {
+            setRedirect(true);
+        }
+    }
+
+
+    if (redirect) {
+        nav("/");
     }
 
 
@@ -54,7 +60,9 @@ export default function CreatePost() {
                     onChange={e => setTitle(e.target.value)} />
             <input type="summary" placeholder={'Summary'} value={summary}
                     onChange={e => setSummary(e.target.value)} />
-            <input type="file"
+            
+            {/* added input type file for user to add image for cover */}
+            <input className="file_input" type="file"
                     onChange={e => setFiles(e.target.files)} />
                     
             {/* <Editor value={content} onChange={setContent} /> */}
