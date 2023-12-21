@@ -1,8 +1,6 @@
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
 import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-// import Editor from "../Editor";
+import Editor from "../Editor";
 
 export default function CreatePost() {
 
@@ -12,21 +10,6 @@ export default function CreatePost() {
     const [files, setFiles] = useState('');
     const [redirect, setRedirect] = useState(false);
     const nav = useNavigate();
-
-    const modules = {
-        toolbar: [
-          [{ header: [1, 2, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-          [
-            { list: 'ordered' },
-            { list: 'bullet' },
-            { indent: '-1' },
-            { indent: '+1' },
-          ],
-          ['link', 'image'],
-          ['clean'],
-        ],
-    };
 
     
     async function createNewPost(e){
@@ -65,9 +48,7 @@ export default function CreatePost() {
             <input className="file_input" type="file"
                     onChange={e => setFiles(e.target.files)} />
                     
-            {/* <Editor value={content} onChange={setContent} /> */}
-            <ReactQuill value={content} modules={modules} theme="snow"
-                    onChange={newValue => setContent(newValue) }/>
+            <Editor value={content} onChange={setContent} />
 
             <button className="create_post_btn">Create post</button>
         </form>

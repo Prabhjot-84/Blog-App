@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { loginFunc, registerFunc, postFunc } from './controller/create.js';
-import { getPostFunc } from './controller/read.js';
+import { getPostsFunc, openPostfunc } from './controller/read.js'; 
+import { updatePostfunc } from './controller/update.js';
 import cookieParser from 'cookie-parser';
 import Jwt from 'jsonwebtoken';
 
@@ -42,9 +43,14 @@ app.post('/logout', (req,res) => {
 // Creating a post
 app.post('/post', postFunc);
 
-// Displaying the post on the home screen
-app.get('/post', getPostFunc);
 
+// Displaying the post on the home screen
+app.get('/post', getPostsFunc);
+// Displaying a single post (on which the user clicks)
+app.get('/post/:id', openPostfunc)
+
+
+app.put('/post', updatePostfunc);
 
 app.listen(PORT, () => { 
     console.log(`server is running successfully on PORT ${PORT}` )

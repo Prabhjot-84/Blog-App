@@ -1,11 +1,21 @@
+import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import User from "../models/user.js";
 import PostModel from "../models/Post.js"
 import bcrypt from 'bcrypt';    // for security
 import Jwt from "jsonwebtoken"; // for security
 import multer from "multer";    // for uploading files
-import fs from "fs";            // fs is file system
+import fs from "fs";       // fs is file system
 
-const uploadMiddleware = multer({ dest: 'uploads/' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
+
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
+const uploadMiddleware = multer({ dest: 'uploads/' }); 
 
 const salt = bcrypt.genSaltSync(10);
 const secret = 'starlink893hasinvadedearth894today';
@@ -60,25 +70,31 @@ export const postFunc = [
         
         // extracting the original name from the uploaded file
         const {originalname, path} = req.file;
-        // breaking the file name into 
+        // breaking the file name into
         const parts = originalname.split('.');
         // to get the extension of the file
         const ext = parts[parts.length-1];
         // file name in uploads before "fs" : 3a1a19cde452855f60d20accc5baeb38
         // file name in uploads after "fs" : 28fca6ce365cf31abb9be65f3293b451.gif
-        const newPath = path+'.'+ext;
-        fs.renameSync(path, newPath );
+        const newPath = path + '.' + ext;
+        fs.renameSync(path, newPath ); 
 
-        const {title,summary,content} = req.body;
-        const postDoc = await PostModel.create({
-            title,
-            summary,
-            content,
-            cover:newPath,
+        const {token} = req.cookies;
+        Jwt.verify( token, secret, {}, async (err, info) => {
+            if( err ) throw err;
             
+            const {title,summary,content} = req.body;
+            const postDoc = await PostModel.create({
+                title,
+                summary,
+                content,
+                cover: newPath,
+                author: info.id,
+            });
+
+            res.json(postDoc);
         });
-        
-        res.json(postDoc);
+
         // res.json( originalname );
         // res.json({files: req.file});
     },

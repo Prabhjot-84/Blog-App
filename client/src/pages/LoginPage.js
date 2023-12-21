@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../userContext';
 
+
+// POST REQ. SEND USING AXIOS BELOW
+
 // async function login(e) {
 //   e.preventDefault();
 
@@ -11,12 +14,12 @@ import { UserContext } from '../userContext';
 
 //     if (response.status === 200) { 
 //       // Authentication was successful; you can redirect the user or perform other actions here.
-//       console.log('Login successful');
+//       console.log('Login successful'); 
 //     } else {
 //       // Handle authentication failure (e.g., show an error message)
 //       console.error('Login failed');
 //     }
-//   } catch (error) {
+//   } catch (error) { 
 //     // Handle network or other errors
 //     console.error('Network error:', error); 
 //   }

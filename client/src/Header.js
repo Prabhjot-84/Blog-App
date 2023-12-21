@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
 import { UserContext } from './userContext';
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
 
 
   return (
-    <header>
+    <header> 
         <Link to="/" className="logo"> Blogtown </Link>
         <nav>
           {username && (
