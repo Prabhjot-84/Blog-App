@@ -32,13 +32,25 @@ export default function ReadPost() {
         <h1 className='postTitle'> {postInfo.title} </h1>
 
         <div className='detailBox' style={{ display:'flex', justifyContent:'space-between', alignContent:'center'}}>
+          
           <div className='postDetails'>
             <time>{formatISO9075(new Date(postInfo.createdAt))}</time>
             <i> by &nbsp;{postInfo.author.username} </i>
           </div>
-          <Link to={`/edit/${postInfo._id}`}>
-            <button className='postEditBtn'> <b>EDIT</b> </button>
-          </Link>
+          
+          <div style={{ display:'flex', alignContent:'center'}}>
+            <Link to={`/edit/${postInfo._id}`} className='editDltBtn'>
+              <button className='postEditBtn'> 
+                <span className='edit_img_cont'> <img className='edit_img' src='../edit_img.png' alt='' /> </span>
+                <b className='edit_text'> EDIT </b> 
+              </button>
+            </Link>
+            <button className='postDltBtn'> 
+              <span className='dlt_img_cont'> <img className='dlt_img' src='../dlt_img.png' alt='' /> </span>
+              <b className='dlt_text'> DLT </b> 
+            </button>
+          </div>
+
         </div>
 
         <div dangerouslySetInnerHTML={{__html:postInfo.content}} />

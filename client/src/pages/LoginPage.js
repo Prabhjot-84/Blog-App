@@ -70,6 +70,8 @@ const LoginPage = () => {
 
     else{
       setalertF('alertFshow');
+      setUsername('');
+      setPassword('');
 
       setTimeout(() => {
         setalertF('popAlert');

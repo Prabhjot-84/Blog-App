@@ -24,6 +24,12 @@ const secret = 'starlink893hasinvadedearth894today';
 // Function called for user REGISTRATION
 export const registerFunc = async (req, res) => {
     const {username, password} = req.body;
+
+    // Check if username or password is empty
+    if (username === '' || password === '') {
+        res.status(400).json({ error: 'Username and password are required.' });
+    }
+
     try{
         const userDoc = await User.create({
             username,
@@ -41,24 +47,29 @@ export const registerFunc = async (req, res) => {
 export const loginFunc = async (req, res) => {
     const {username, password} = req.body;  
 
-    // checking if someone with this username is registered or not
-    const userDoc = await User.findOne( {username} );
+    try{
+        // checking if someone with this username is registered or not
+        const userDoc = await User.findOne( {username} );
 
-    // checking if login password is same as that of registered
-    const passOk = bcrypt.compareSync(password, userDoc.password);
+        // checking if login password is same as that of registered
+        const passOk = bcrypt.compareSync(password, userDoc.password);
 
-    if( passOk){
-        // logged-in
-        Jwt.sign( {username, id:userDoc._id}, secret, {}, (err, token) => {
-            if(err) throw err;
-            res.cookie( 'token', token).json({
-                id: userDoc._id,
-                username,
-            });
-        })
+        if( passOk){
+            // logged-in
+            Jwt.sign( {username, id:userDoc._id}, secret, {}, (err, token) => {
+                if(err) throw err;
+                res.cookie( 'token', token).json({
+                    id: userDoc._id,
+                    username,
+                });
+            })
+        }
+        else{
+            res.status(400).json('Wrong Credentials');
+        }
     }
-    else{
-        res.status(400).json('Wrong Credentials');
+    catch(e){
+        res.status(400).json(e);
     }
 }
 
