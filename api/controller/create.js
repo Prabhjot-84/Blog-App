@@ -76,38 +76,29 @@ export const loginFunc = async (req, res) => {
 
 
 // Creating a post 
-export const postFunc = [
-    uploadMiddleware.single('file'), // Use the uploadMiddleware as a middleware
-    async (req, res) => {
-        
-        // extracting the original name from the uploaded file
-        const {originalname, path} = req.file;
-        // breaking the file name into
-        const parts = originalname.split('.');
-        // to get the extension of the file
-        const ext = parts[parts.length-1];
-        // file name in uploads before "fs" : 3a1a19cde452855f60d20accc5baeb38
-        // file name in uploads after "fs" : 28fca6ce365cf31abb9be65f3293b451.gif
-        const newPath = path + '.' + ext;
-        fs.renameSync(path, newPath ); 
+export const postFunc = async (req, res) => {
+    const { token } = req.cookies;
 
-        const {token} = req.cookies;
-        Jwt.verify( token, secret, {}, async (err, info) => {
-            if( err ) throw err;
-            
-            const {title,summary,content} = req.body;
+    Jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) {
+            console.error('JWT Verification Error:', err);
+            return res.status(403).json({ error: 'Unauthorized access' });
+        }
+
+        const { title, summary, content } = req.body;
+
+        try {
             const postDoc = await PostModel.create({
                 title,
                 summary,
                 content,
-                cover: newPath,
                 author: info.id,
             });
 
             res.json(postDoc);
-        });
-
-        // res.json( originalname );
-        // res.json({files: req.file});
-    },
-  ];
+        } catch (error) {
+            console.error('Error creating post:', error);
+            res.status(500).json({ error: 'Failed to create post' });
+        }
+    });
+};

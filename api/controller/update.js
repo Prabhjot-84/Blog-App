@@ -21,41 +21,39 @@ const salt = bcrypt.genSaltSync(10);
 const secret = 'starlink893hasinvadedearth894today';
 
 
-export const updatePostfunc = [
-    uploadMiddleware.single('file'), // Use the uploadMiddleware as a middleware
-    async (req, res) => {
+export const updatePostfunc = async (req, res) => {
+    const { token } = req.cookies;
 
-        let newPath = null;
-        if (req.file) {
-            const {originalname,path} = req.file;
-            const parts = originalname.split('.');
-            const ext = parts[parts.length - 1];
-            newPath = path+'.'+ext;
-            fs.renameSync(path, newPath);
+    Jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) {
+            console.error('JWT Verification Error:', err);
+            return res.status(403).json({ error: 'Unauthorized access' });
         }
-        
-        const {token} = req.cookies;
 
-        Jwt.verify(token, secret, {}, async (err,info) => {
-                
-            if (err) throw err;
-            
-            const {id,title,summary,content} = req.body;
+        const { id, title, summary, content } = req.body;
+
+        try {
             const postDoc = await PostModel.findById(id);
+
+            if (!postDoc) {
+                return res.status(404).json({ error: 'Post not found' });
+            }
+
             const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
-            
             if (!isAuthor) {
-                return res.status(400).json('you are not the author');
+                return res.status(403).json({ error: 'You are not the author of this post' });
             }
 
             await postDoc.updateOne({
-            title,
-            summary,
-            content,
-            cover: newPath ? newPath : postDoc.cover,
+                title,
+                summary,
+                content,
             });
 
-            res.json(postDoc);
-        });
-    }
-]
+            res.json({ success: true, post: postDoc });
+        } catch (error) {
+            console.error('Error updating post:', error);
+            res.status(500).json({ error: 'Failed to update post' });
+        }
+    });
+};

@@ -7,7 +7,6 @@ export default function CreatePost() {
     const [title,setTitle] = useState('');
     const [summary,setSummary] = useState('');
     const [content,setContent] = useState('');
-    const [files, setFiles] = useState('');
     const [redirect, setRedirect] = useState(false);
     const nav = useNavigate();
 
@@ -21,7 +20,6 @@ export default function CreatePost() {
         data.set('title', title);
         data.set('summary', summary);
         data.set('content', content);
-        data.set('file', files[0]);
 
         e.preventDefault();
         
@@ -30,7 +28,7 @@ export default function CreatePost() {
             body: data,
             credentials: 'include',
         });
-        
+
         if (response.ok) {
             setRedirect(true);
         }
@@ -50,8 +48,8 @@ export default function CreatePost() {
                     onChange={e => setSummary(e.target.value)} />
             
             {/* added input type file for user to add image for cover */}
-            <input className="file_input" type="file"
-                    onChange={e => setFiles(e.target.files)} />
+            {/* <input className="file_input" type="file"
+                    onChange={e => setFiles(e.target.files)} /> */}
                     
             <Editor value={content} onChange={setContent} />
 

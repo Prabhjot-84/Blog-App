@@ -13,25 +13,24 @@ const PORT = process.env.PORT || 4000;
 const secret = 'starlink893hasinvadedearth894today';
 
 dotenv.config();
-// app.use( cors({credentials:true, origin:'http://localhost:3000'}) ); 
-// app.use( cors({credentials:true, origin:'https://blog-town.netlify.app/'}) );
 
-const allowedOrigins = [
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
     'http://localhost:3000',
     'https://blog-town.netlify.app/'
-  ];
-  
+];
+
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
+            callback(null, true);
         } else {
-        callback(new Error('Not allowed by CORS'));
+            console.error(`Blocked by CORS: ${origin}`);
+            callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
+    credentials: true,
 };
-  
+
 app.use(cors(corsOptions));
 
 app.use( express.json() );

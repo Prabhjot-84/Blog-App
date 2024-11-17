@@ -1,26 +1,25 @@
 import '../ReadPost.css';
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {formatISO9075} from "date-fns";
-import { UserContext } from "../userContext";
 import {Link} from 'react-router-dom';
 
 export default function ReadPost() {
 
   const [postInfo,setPostInfo] = useState(null);
-  const {userInfo} = useContext(UserContext);
   const {id} = useParams();
 
   const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
-  
+
   useEffect(() => {
     fetch(`${API_URL}/post/${id}`)
-      .then(response => {
-        response.json().then(postInfo => {
-          setPostInfo(postInfo);
-        });
-      });
-  }, []);
+        .then(response => response.json())
+        .then(postInfo => {
+            setPostInfo(postInfo);
+      })
+      .catch(err => console.error('Error fetching post:', err));
+  }, [API_URL, id]);
+
 
   if (!postInfo) return '';
 
@@ -28,7 +27,7 @@ export default function ReadPost() {
     <div className="postPage">
 
         <div className="postPageImg">
-            <img src={'https://source.unsplash.com/weekly?orientation=landscape&size=1600x900&' + postInfo.title } />
+            <img alt='cover' src={'https://source.unsplash.com/weekly?orientation=landscape&size=1600x900&' + postInfo.title } />
         </div>
 
         <h1 className='postTitle'> {postInfo.title} </h1>
