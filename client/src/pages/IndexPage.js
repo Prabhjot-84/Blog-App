@@ -5,9 +5,11 @@ import {useEffect, useState} from "react";
 
 const IndexPage = () => {
 
+  const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
+
   const [posts,setPosts] = useState([]); 
   useEffect(() => {
-    fetch('http://localhost:4000/post').then(response => {
+    fetch(`${API_URL}/post`).then(response => {
       response.json().then(posts => { 
         setPosts(posts);
       });
@@ -17,9 +19,9 @@ const IndexPage = () => {
   return (
     <>
       <Headline />
-      <div className='blogGrid'> 
+      <div className='blogGrid'>
         {posts.length > 0 && posts.map(post => (
-          <Post {...post} />
+          <Post key={post.id} {...post} />
         ))}
       </div>
     </>

@@ -11,7 +11,7 @@ import fs from "fs";       // fs is file system
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const app = express();
+const app = express(); 
 
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
@@ -45,7 +45,8 @@ export const registerFunc = async (req, res) => {
 
 // Function called for LOGIN req.
 export const loginFunc = async (req, res) => {
-    const {username, password} = req.body;  
+    
+    const {username, password} = req.body; 
 
     try{
         // checking if someone with this username is registered or not
@@ -54,7 +55,7 @@ export const loginFunc = async (req, res) => {
         // checking if login password is same as that of registered
         const passOk = bcrypt.compareSync(password, userDoc.password);
 
-        if( passOk){
+        if( passOk ){
             // logged-in
             Jwt.sign( {username, id:userDoc._id}, secret, {}, (err, token) => {
                 if(err) throw err;

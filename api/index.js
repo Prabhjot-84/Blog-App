@@ -9,15 +9,35 @@ import cookieParser from 'cookie-parser';
 import Jwt from 'jsonwebtoken';
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const secret = 'starlink893hasinvadedearth894today';
 
 dotenv.config();
-app.use( cors({credentials:true, origin:'http://localhost:3000'}) );
-app.use( express.json() );
-app.use( cookieParser() );
+// app.use( cors({credentials:true, origin:'http://localhost:3000'}) ); 
+// app.use( cors({credentials:true, origin:'https://blog-town.netlify.app/'}) );
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.a0xihpu.mongodb.net/?retryWrites=true&w=majority`);
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://blog-town.netlify.app/'
+  ];
+  
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+        } else {
+        callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+};
+  
+app.use(cors(corsOptions));
+
+app.use( express.json() );
+app.use( cookieParser() ); 
+
+mongoose.connect(`${process.env.CONNECTION_URI}`);
 
 // requests coming from these routes will go to specified functions
 app.post( '/register', registerFunc);

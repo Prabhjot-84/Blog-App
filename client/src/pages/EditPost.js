@@ -14,8 +14,10 @@ const EditPost = () => {
     const [redirect, setRedirect] = useState(false);
     const nav = useNavigate();
 
+    const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
+
     useEffect(() => {
-        fetch('http://localhost:4000/post/'+id)
+        fetch(`${API_URL}/post/`+id)
             .then(response => {
                 response.json().then(postInfo => {
                 setTitle(postInfo.title);
@@ -48,7 +50,7 @@ const EditPost = () => {
         // }
 
         try {
-            const response = await fetch('http://localhost:4000/post', {
+            const response = await fetch(`${API_URL}/post`, {
                 method: 'PUT',
                 body: data,
                 credentials: 'include',

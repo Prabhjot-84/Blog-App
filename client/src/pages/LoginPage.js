@@ -37,10 +37,12 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const nav = useNavigate();
 
+  const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
+
   async function login(e){
     e.preventDefault();
 
-    const response = await fetch('http://localhost:4000/login', {
+    const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
       body: JSON.stringify( {username,password} ),
       headers: {'Content-Type': 'application/json'},

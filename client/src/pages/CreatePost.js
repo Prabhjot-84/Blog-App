@@ -11,8 +11,12 @@ export default function CreatePost() {
     const [redirect, setRedirect] = useState(false);
     const nav = useNavigate();
 
+    const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
+
     
     async function createNewPost(e){
+
+        // Here you can use the formData object to send form data to the server
         const data = new FormData();
         data.set('title', title);
         data.set('summary', summary);
@@ -21,11 +25,12 @@ export default function CreatePost() {
 
         e.preventDefault();
         
-        const response = await fetch('http://localhost:4000/post', {
-        method: 'POST',
-        body: data,
-        credentials: 'include',
+        const response = await fetch(`${API_URL}/post`, {
+            method: 'POST',
+            body: data,
+            credentials: 'include',
         });
+        
         if (response.ok) {
             setRedirect(true);
         }

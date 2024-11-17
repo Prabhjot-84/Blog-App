@@ -8,16 +8,18 @@ const RegisterPage = () => {
     const [alertF, setalertF] = useState('popAlert');
     const [alertS, setalertS] = useState('popAlert');
 
+    const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
+
     async function register(e) {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:4000/register', {    // http request to backend
+        const response = await fetch(`${API_URL}/register`, {    // http request to backend
             method: 'POST', 
             body: JSON.stringify({username,password}),
             headers: {'Content-Type': 'application/json'},
         });
 
-        if( response.status === 200 ){
+        if( response.status === 200 ) {
             // className is changed to change the css properties so notificaiton will be visible
             setalertS('alertSshow');    
 

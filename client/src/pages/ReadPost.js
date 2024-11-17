@@ -10,9 +10,11 @@ export default function ReadPost() {
   const [postInfo,setPostInfo] = useState(null);
   const {userInfo} = useContext(UserContext);
   const {id} = useParams();
+
+  const API_URL = process.env.BACKEND_API_URL || 'http://localhost:4000';
   
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`)
+    fetch(`${API_URL}/post/${id}`)
       .then(response => {
         response.json().then(postInfo => {
           setPostInfo(postInfo);

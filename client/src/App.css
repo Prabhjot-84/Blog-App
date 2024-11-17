@@ -38,6 +38,12 @@ header{
   z-index: 1;
 }
 
+.header-logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header a{
   text-decoration: none;
   color: inherit;

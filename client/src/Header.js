@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from './userContext';
+import Icon from './icon.png';
 
 const Header = () => {
   
@@ -33,19 +34,25 @@ const Header = () => {
 
   return (
     <header> 
-        <Link to="/" className="logo"> Blogtown </Link>
+        <div className='header-logo'>
+          <img src={Icon} alt='' />
+          <Link to="/" className="logo"> &nbsp; Blogtown </Link>
+        </div>
         <nav>
+
           {username && (
             <>
               <button className='logout' onClick={logout} > Logout <img className='logout_img' src='./logout_img.png' alt='' /> </button>
             </>
           )}
+
           { !username && (
             <>
               <Link to="/login"> Login </Link>
               <Link to="/register"> Register </Link>
             </>
           )}
+          
         </nav>
     </header>
   )
